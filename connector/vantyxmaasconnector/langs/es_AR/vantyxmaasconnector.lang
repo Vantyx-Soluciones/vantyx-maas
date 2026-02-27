@@ -1,0 +1,6 @@
+# Vantyx MaaS Connector language file - es_AR
+ModuleVantyxMaaSConnectorName = Conector Vantyx MaaS
+VantyxMaaSConnectorDescription = Conector para servicios en la nube de Vantyx Soluciones
+VantyxMaaSSetup = Configuración de Vantyx MaaS
+VantyxCloudToken = Token de Nube Vantyx
+InstructionsConnectivity = Instrucciones de Conectividad

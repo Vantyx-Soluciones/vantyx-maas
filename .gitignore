@@ -1,0 +1,6 @@
+core/cache/
+logs/*.log
+certs/
+.DS_Store
+*.tmp
+/tmp/
