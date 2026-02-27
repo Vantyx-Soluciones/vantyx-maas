@@ -1,10 +1,11 @@
 <?php
 /**
- * Vantyx MaaS Connector - Setup Page
+ * Setup page for Vantyx MaaS Connector
  */
 
-require '../../../main.inc.php';
+require '../../main.inc.php';
 require_once DOL_DOCUMENT_ROOT . '/core/lib/admin.lib.php';
+require_once DOL_DOCUMENT_ROOT . '/core/lib/functions.lib.php';
 
 $langs->load("admin");
 $langs->load("vantyxmaasconnector@vantyxmaasconnector");
@@ -12,55 +13,67 @@ $langs->load("vantyxmaasconnector@vantyxmaasconnector");
 if (!$user->admin)
     accessforbidden();
 
-$action = GETPOST('action', 'aZ09');
+$action = GETPOST('action', 'alpha');
 
+// Acciones de guardado
 if ($action == 'update') {
-    dolibarr_set_const($db, 'VANTYXMAAS_TOKEN', GETPOST('VANTYXMAAS_TOKEN', 'alpha'), 'chaine', 0, '', $conf->entity);
-    setEventMessages($langs->trans("SetupSaved"), null, 'mesgs');
+    $res1 = dolibarr_set_const($db, 'VANTYXMAAS_API_URL', GETPOST('VANTYXMAAS_API_URL', 'alpha'), 'chaine', 0, '', $conf->entity);
+    $res2 = dolibarr_set_const($db, 'VANTYXMAAS_TOKEN', GETPOST('VANTYXMAAS_TOKEN', 'alpha'), 'chaine', 0, '', $conf->entity);
+    $res3 = dolibarr_set_const($db, 'VANTYXMAAS_PRODUCTION', GETPOST('VANTYXMAAS_PRODUCTION', 'alpha'), 'chaine', 0, '', $conf->entity);
+
+    if ($res1 > 0 || $res2 > 0 || $res3 > 0) {
+        setEventMessages($langs->trans("SetupSaved"), null, 'mesgs');
+    }
 }
 
 /*
  * View
  */
-llxHeader('', $langs->trans("Vantyx MaaS - Configuración"));
+$form = new Form($db);
+
+llxHeader('', $langs->trans("VantyxMaaSSetup"));
 
 $linkback = '<a href="' . DOL_URL_ROOT . '/admin/modules.php?restore_lastsearch_values=1">' . $langs->trans("BackToModuleList") . '</a>';
-print load_fiche_titre($langs->trans("Vantyx MaaS - Configuración"), $linkback, 'title_setup');
+print load_fiche_titre($langs->trans("VantyxMaaSSetup"), $linkback, 'title_setup');
 
-print '<form method="post" action="' . $_SERVER["PHP_SELF"] . '">';
-print '<input type="hidden" name="token" value="' . $_SESSION['newtoken'] . '">';
+print '<form action="' . $_SERVER["PHP_SELF"] . '" method="post">';
+print '<input type="hidden" name="token" value="' . newToken() . '">';
 print '<input type="hidden" name="action" value="update">';
-
-print dol_get_fiche_head([], '', '', -1);
 
 print '<table class="noborder centertable" width="100%">';
 print '<tr class="liste_titre">';
-print '<td>' . $langs->trans("Parámetro") . '</td>';
-print '<td>' . $langs->trans("Valor") . '</td>';
+print '<td>' . $langs->trans("Parameter") . '</td>';
+print '<td>' . $langs->trans("Value") . '</td>';
 print '</tr>';
 
-// Token de Vantyx
-print '<tr class="oddeven">';
-print '<td>Vantyx Cloud Token</td>';
-print '<td><input type="text" name="VANTYXMAAS_TOKEN" size="40" value="' . $conf->global->VANTYXMAAS_TOKEN . '"></td>';
-print '</tr>';
+// URL
+print '<tr class="oddeven"><td>';
+print $form->textwithpicto($langs->trans("VantyxMaaSURL"), $langs->trans("VantyxMaaSURLDesc"));
+print '</td><td>';
+print '<input type="text" size="60" name="VANTYXMAAS_API_URL" value="' . $conf->global->VANTYXMAAS_API_URL . '">';
+print '</td></tr>';
+
+// Token
+print '<tr class="oddeven"><td>';
+print $form->textwithpicto($langs->trans("VantyxMaaSToken"), $langs->trans("VantyxMaaSTokenDesc"));
+print '</td><td>';
+print '<input type="text" size="60" name="VANTYXMAAS_TOKEN" value="' . $conf->global->VANTYXMAAS_TOKEN . '">';
+print '</td></tr>';
+
+// Production
+print '<tr class="oddeven"><td>';
+print $langs->trans("VantyxMaaSProduction");
+print '</td><td>';
+print $form->selectyesno("VANTYXMAAS_PRODUCTION", $conf->global->VANTYXMAAS_PRODUCTION, 1);
+print '</td></tr>';
 
 print '</table>';
 
-print dol_get_fiche_end();
-
-print '<div class="center"><input type="submit" class="button" value="' . $langs->trans("Save") . '"></div>';
-print '</form>';
-
-// Ayuda sobre Webhooks
-print '<br>';
-print '<div class="info">';
-print '<strong>' . $langs->trans("Instrucciones de Conectividad") . ':</strong><br>';
-print 'Para habilitar la Facturación Electrónica vía Vantyx Cloud, configure un Webhook nativo en Dolibarr:<br>';
-print '1. Vaya a <strong>Configuración -> Módulos -> Webhooks</strong>.<br>';
-print '2. Cree un nuevo Webhook para el evento <code>FACTURA_VALIDATE</code>.<br>';
-print '3. URL de destino: <code>https://api.vantyx.net/index.php?token=' . ($conf->global->VANTYXMAAS_TOKEN ?: 'SU_TOKEN') . '</code>';
+print '<div class="tabsAction">';
+print '<input type="submit" class="button" value="' . $langs->trans("Modify") . '">';
 print '</div>';
+
+print '</form>';
 
 llxFooter();
 $db->close();

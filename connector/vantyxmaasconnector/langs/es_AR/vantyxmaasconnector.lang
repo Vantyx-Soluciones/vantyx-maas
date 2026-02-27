@@ -1,6 +1,15 @@
-# Vantyx MaaS Connector language file - es_AR
+# Dolibarr language file - es_AR - vantyxmaasconnector
 ModuleVantyxMaaSConnectorName = Conector Vantyx MaaS
-VantyxMaaSConnectorDescription = Conector para servicios en la nube de Vantyx Soluciones
-VantyxMaaSSetup = Configuración de Vantyx MaaS
-VantyxCloudToken = Token de Nube Vantyx
-InstructionsConnectivity = Instrucciones de Conectividad
+ModuleVantyxMaaSConnectorDesc = Conector para servicios en la nube de Vantyx Soluciones.
+VantyxMaaSSetup = Configuración del Conector Vantyx MaaS
+VantyxMaaSURL = URL del API MaaS
+VantyxMaaSURLDesc = Dirección del endpoint en AWS (ej. https://api.vantyx.net/core/index.php)
+VantyxMaaSToken = Token de Acceso Vantyx
+VantyxMaaSTokenDesc = Token único proporcionado por Vantyx para identificar su instancia.
+VantyxMaaSProduction = Modo Producción
+VantyxMaaSProductionDesc = Habilite esta opción para usar los endpoints de producción de AFIP.
+VantyxMaaSStatus = Estado de Conexión
+VantyxMaaSConnected = Conectado
+VantyxMaaSDisconnected = Desconectado
+VantyxMaaSSendSuccess = Solicitud enviada correctamente a Vantyx Cloud.
+VantyxMaaSSendError = Error al comunicar con Vantyx Cloud: %s
