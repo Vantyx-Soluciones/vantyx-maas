@@ -1,6 +1,8 @@
 # Vantyx Module as a Service (MaaS) 🚀
 
-![Vantyx Banner](docs/img/logo-vantyx.png)
+<p align="center">
+  <img src="docs/img/logo-vantyx.png" alt="Vantyx Logo" width="300">
+</p>
 
 ### El núcleo de potencia para tu ecosistema Dolibarr.
 
