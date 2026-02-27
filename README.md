@@ -1,6 +1,6 @@
 # Vantyx Module as a Service (MaaS) 🚀
 
-![Vantyx Banner](https://vantyx.net/wp-content/uploads/2023/10/cropped-Logo-Vantyx-Soluciones-Horizontal.png)
+![Vantyx Banner](docs/img/logo-vantyx.png)
 
 ### El núcleo de potencia para tu ecosistema Dolibarr.
 
@@ -30,7 +30,7 @@ El repositorio está organizado para separar la lógica del motor (Core) de la d
 
 ## 🚀 Inicio Rápido
 
-### Para el Administrador (Geronimo)
+### Para el Administrador (Enrique)
 
 1.  **Despliegue:** Consultar la [Guía de Despliegue en AWS](docs/DESPLIEGUE_AWS.md).
 2.  **Configuración:** Añadir clientes en `core/config.php`.
